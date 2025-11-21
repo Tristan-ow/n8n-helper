@@ -39,11 +39,16 @@ public class PdfController {
             byte[] inputPdf = file.getBytes();
             byte[] stampedPdf = pdfService.applyStamps(inputPdf, request);
 
+            String outputFileName = request.getOutputFileName();
+            if (outputFileName == null || outputFileName.trim().isEmpty()) {
+                outputFileName = "stamped.pdf";
+            }
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDisposition(
                     ContentDisposition.attachment()
-                            .filename("stamped.pdf")
+                            .filename(outputFileName)
                             .build()
             );
 
