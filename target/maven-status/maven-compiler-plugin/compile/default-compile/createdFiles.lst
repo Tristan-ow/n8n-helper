@@ -1,0 +1,7 @@
+org\owlaw\n8nhelper\pdf\dto\PdfTextResponse.class
+org\owlaw\n8nhelper\pdf\dto\PdfMultiStampRequest.class
+org\owlaw\n8nhelper\N8nHelperApplication.class
+org\owlaw\n8nhelper\pdf\service\PdfService.class
+org\owlaw\n8nhelper\pdf\dto\PdfStamp.class
+org\owlaw\n8nhelper\pdf\controller\PdfController.class
+org\owlaw\n8nhelper\pdf\dto\PdfTextRequest.class
