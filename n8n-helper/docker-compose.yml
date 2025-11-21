@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  n8n-helper:
+    build:
+      context: .          # aus dem Repo-Root
+      dockerfile: Dockerfile
+    image: n8n-helper     # lokaler Name
+    container_name: n8n-helper
+    ports:
+      - "6666:8080"       # außen 6666 → innen 8080
+    restart: unless-stopped

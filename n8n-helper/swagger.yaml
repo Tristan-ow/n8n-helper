@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: n8n Helper PDF API
+  version: 1.0.0
+  description: |
+    API zum Einfügen von Textstempeln in vorhandene PDF-Dokumente.
+servers:
+  - url: https://{host}
+    description: Beispielserver
+    variables:
+      host:
+        default: localhost:8080
+paths:
+  /api/pdf/stamp:
+    post:
+      summary: PDF mit Textstempeln versehen
+      operationId: stampPdf
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - stamps
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF-Datei, die gestempelt werden soll.
+                stamps:
+                  description: JSON-Repräsentation der Stempeldefinitionen.
+                  type: string
+                  example: |
+                    {
+                      "stamps": [
+                        { "x": 50, "y": 700, "page": 1, "fontSize": 12, "text": "Signatur" }
+                      ]
+                    }
+      responses:
+        '200':
+          description: Erfolgreich gestempeltes PDF.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Ungültiger Request, z. B. fehlerhaftes Stempel-JSON.
+        '500':
+          description: Unerwarteter Serverfehler.
+      tags:
+        - PDF
+components:
+  schemas:
+    PdfMultiStampRequest:
+      type: object
+      properties:
+        stamps:
+          type: array
+          items:
+            $ref: '#/components/schemas/PdfStamp'
+      required:
+        - stamps
+    PdfStamp:
+      type: object
+      properties:
+        x:
+          type: number
+          format: float
+        y:
+          type: number
+          format: float
+        page:
+          type: integer
+          minimum: 1
+        fontSize:
+          type: number
+          format: float
+          minimum: 1
+        text:
+          type: string
+      required:
+        - x
+        - y
+        - page
+        - fontSize
+        - text
+
