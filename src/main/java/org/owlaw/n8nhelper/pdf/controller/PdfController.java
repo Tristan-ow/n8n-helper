@@ -30,7 +30,8 @@ public class PdfController {
     )
     public ResponseEntity<byte[]> stamp(
             @RequestPart("file") MultipartFile file,
-            @RequestPart("stamps") String stampsJson
+            @RequestPart("stamps") String stampsJson,
+            @RequestPart("outputFileName") String outputFileName
     ) {
         try {
             PdfMultiStampRequest request =
@@ -39,7 +40,6 @@ public class PdfController {
             byte[] inputPdf = file.getBytes();
             byte[] stampedPdf = pdfService.applyStamps(inputPdf, request);
 
-            String outputFileName = request.getOutputFileName();
             if (outputFileName == null || outputFileName.trim().isEmpty()) {
                 outputFileName = "stamped.pdf";
             }

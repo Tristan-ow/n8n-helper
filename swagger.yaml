@@ -41,7 +41,13 @@ paths:
                     }
       responses:
         '200':
-          description: Erfolgreich gestempeltes PDF.
+          description: Erfolgreich gestempeltes PDF. Der Dateiname wird im Content-Disposition Header zurückgegeben (verwendet outputFileName aus dem Request, falls angegeben, sonst "stamped.pdf").
+          headers:
+            Content-Disposition:
+              description: Enthält den Dateinamen der zurückgegebenen PDF-Datei (basierend auf outputFileName aus dem Request).
+              schema:
+                type: string
+                example: 'attachment; filename="custom-output.pdf"'
           content:
             application/pdf:
               schema:
